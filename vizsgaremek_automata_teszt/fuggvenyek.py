@@ -54,7 +54,7 @@ class Fuggvenyek:
 
         assert user_name.text == user["name"]
 
-    #     függvény bejelentkezésről
+    # függvény bejelentkezésről
     def login(self):
         sign_in_button = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'ion-compose')))
@@ -80,11 +80,11 @@ class Fuggvenyek:
 
         assert user_name.text == user["name"]
 
-    #   függvény egy felhasználó cikkeinek kilistázásához
+    # függvény egy felhasználó cikkeinek kilistázásához
     def data_listing(self):
         user = self.browser.find_elements(By.XPATH, '//a [@class="author"]')[0]
         user.click()
-        # time.sleep(5)
+        time.sleep(5)
         assert self.browser.current_url != 'http://localhost:1667/#/'
 
         article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')

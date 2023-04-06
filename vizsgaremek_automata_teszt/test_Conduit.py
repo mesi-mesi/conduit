@@ -1,5 +1,5 @@
 from fuggvenyek import Fuggvenyek
-
+from adatok import *
 import time
 import csv
 from selenium import webdriver
@@ -28,5 +28,13 @@ class TestConduit(Fuggvenyek):
     def teardown_method(self):
         self.browser.quit()
 
+    # TC_01 Adatkezési tájékoztató elfogadása
+
     def test_accept_cookie(self):
         self.accept_cookie()
+
+#     TC_02 Regisztráció az oldalra megfelelő adatokkal
+    def test_registration(self):
+        self.accept_cookie()
+        self.registration()
+

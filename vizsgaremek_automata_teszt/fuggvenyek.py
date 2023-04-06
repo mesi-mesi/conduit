@@ -82,8 +82,8 @@ class Fuggvenyek:
 
     # függvény egy felhasználó cikkeinek kilistázásához
     def data_listing(self):
-        user = self.browser.find_elements(By.XPATH, '//a [@class="author"]')[0]
-        user.click()
+        first_user = self.browser.find_elements(By.XPATH, '//a [@class="author"]')[0]
+        first_user.click()
         time.sleep(5)
         assert self.browser.current_url != 'http://localhost:1667/#/'
 

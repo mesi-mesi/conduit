@@ -38,3 +38,7 @@ class TestConduit(Fuggvenyek):
         self.accept_cookie()
         self.registration()
 
+#    TC_03 Bejelentkezés megfelelő adatokkal
+    def test_login(self):
+        self.accept_cookie()
+        self.login()

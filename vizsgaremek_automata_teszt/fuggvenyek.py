@@ -54,3 +54,30 @@ class Fuggvenyek:
 
         assert user_name.text == user["name"]
         # assert self.browser.current_url == 'http://localhost:1667/#/'
+
+#     függvény bejelentkezésről
+    def login(self):
+        sign_in_button = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.CLASS_NAME, 'ion-compose')))
+        sign_in_button.click()
+        assert self.browser.current_url == 'http://localhost:1667/#/login'
+
+        email_sign_in = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//input [@placeholder="Email"]')))
+
+        email_sign_in.send_keys(user["email"])
+
+        password_sign_in = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//input [@placeholder="Password"]')))
+        password_sign_in.send_keys(user["password"])
+
+        sign_in_account = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH,
+                                            '//button [@class="btn btn-lg btn-primary pull-xs-right"]')))
+        sign_in_account.click()
+
+        user_name = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//a [@href="#/@user_emese/" and @class="nav-link"]')))
+
+        assert user_name.text == user["name"]
+

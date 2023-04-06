@@ -82,7 +82,9 @@ class Fuggvenyek:
 
     # függvény egy felhasználó cikkeinek kilistázásához
     def data_listing(self):
-        first_user = self.browser.find_element(By.XPATH, '// a[@class="author"]')
+        first_user = WebDriverWait(self.browser, 10).until(
+            EC.presence_of_element_located((By.CLASS_NAME, 'author')))
+        #first_user = self.browser.find_element(By.XPATH, '// a[@class="author"]')
         first_user.click()
         time.sleep(5)
         assert self.browser.current_url != 'http://localhost:1667/#/'

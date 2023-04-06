@@ -1,0 +1,6 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Thu Apr 06 17:17:44 GMT 2023","Thu Apr 06 17:17:44 GMT 2023","55","vizsgaremek_automata_teszt","test_Conduit","TestConduit","","","test_accept_cookie",""
+"broken","Thu Apr 06 17:17:51 GMT 2023","Thu Apr 06 17:17:52 GMT 2023","847","vizsgaremek_automata_teszt","test_Conduit","TestConduit","","","test_data_listing",""
+"passed","Thu Apr 06 17:17:54 GMT 2023","Thu Apr 06 17:18:05 GMT 2023","11092","vizsgaremek_automata_teszt","test_Conduit","TestConduit","","","test_multi_page_list",""
+"passed","Thu Apr 06 17:17:49 GMT 2023","Thu Apr 06 17:17:50 GMT 2023","884","vizsgaremek_automata_teszt","test_Conduit","TestConduit","","","test_login",""
+"passed","Thu Apr 06 17:17:46 GMT 2023","Thu Apr 06 17:17:48 GMT 2023","2443","vizsgaremek_automata_teszt","test_Conduit","TestConduit","","","test_registration",""

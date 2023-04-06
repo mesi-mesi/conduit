@@ -27,7 +27,7 @@ class Fuggvenyek:
     def registration(self):
         sign_up = self.browser.find_elements(By.XPATH, '//li/a [@class="nav-link"]')[1]
         sign_up.click()
-        # assert self.browser.current_url == 'http://localhost:1667/#/register'
+        assert self.browser.current_url == 'http://localhost:1667/#/register'
 
         username = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//input [@placeholder="Username"]')))
@@ -53,9 +53,8 @@ class Fuggvenyek:
             EC.presence_of_element_located((By.XPATH, '//a [@href="#/@user_emese/" and @class="nav-link"]')))
 
         assert user_name.text == user["name"]
-        # assert self.browser.current_url == 'http://localhost:1667/#/'
 
-#     függvény bejelentkezésről
+    #     függvény bejelentkezésről
     def login(self):
         sign_in_button = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'ion-compose')))
@@ -81,3 +80,40 @@ class Fuggvenyek:
 
         assert user_name.text == user["name"]
 
+    #   függvény egy felhasználó cikkeinek kilistázásához
+    def data_listing(self):
+        user = self.browser.find_elements(By.XPATH, '//a [@class="author"]')[0]
+        user.click()
+        # time.sleep(5)
+        assert self.browser.current_url != 'http://localhost:1667/#/'
+
+        article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')
+        last_article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')[-1]
+
+        for j in range(article.__len__()):
+            article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')[j]
+            j += 1
+
+        assert article.text != ""
+        assert last_article.text == article.text
+
+    # függvény több oldalas lista bejárására, a Conduit oldal összes cikk bejárása
+    def multi_page_list(self):
+
+        page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')
+        osszeg = 0
+
+        for i in range(page_link_button.__len__()):
+            page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')[i]
+            assert page_link_button.is_displayed()
+            page_link_button.click()
+            time.sleep(5)
+            i += 1
+
+            article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')
+            for j in range(article.__len__()):
+                article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')[j]
+                j += 1
+
+            osszeg += j
+        print(f'Jelenleg {osszeg} cikk található az oldalon')

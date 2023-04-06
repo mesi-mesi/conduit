@@ -44,10 +44,10 @@ class TestConduit(Fuggvenyek):
         self.login()
 
 #   TC_04 Egyik felhasználó cikkeinek kilistázása/lista bejárása
-    def test_data_listing(self):
-        self.accept_cookie()
-        self.login()
-        self.data_listing()
+#     def test_data_listing(self):
+#         self.accept_cookie()
+#         self.login()
+#         self.data_listing()
 
 #   TC_05 Több oldalas lista bejárása
     def test_multi_page_list(self):

@@ -25,21 +25,27 @@ class Fuggvenyek:
 
     # függvény a regisztrációról
     def registration(self):
-        sign_up = self.browser.find_elements(By.XPATH, '//li/a [@class="nav-link"]')[1]
+        self.registration_with_param(user["name"], user["email"], user["password"])
+
+    # függvény a regisztráció paramétereiről
+    def registration_with_param(self, reg_username, reg_email, reg_password):
+        sign_up = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//a [@href="#/register"]')))
+
         sign_up.click()
         assert self.browser.current_url == 'http://localhost:1667/#/register'
 
         username = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//input [@placeholder="Username"]')))
-        username.send_keys(user["name"])
+        username.send_keys(reg_username)
 
         email = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//input [@placeholder="Email"]')))
-        email.send_keys(user["email"])
+        email.send_keys(reg_email)
 
         password = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//input [@placeholder="Password"]')))
-        password.send_keys(user["password"])
+        password.send_keys(reg_password)
 
         sign_up_account = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//button [@class="btn btn-lg btn-primary pull-xs-right"]')))
@@ -50,9 +56,10 @@ class Fuggvenyek:
         ok_button.click()
 
         user_name = WebDriverWait(self.browser, 5).until(
-            EC.presence_of_element_located((By.XPATH, '//a [@href="#/@user_emese/" and @class="nav-link"]')))
+            EC.presence_of_element_located((By.XPATH, '//a [@href="#/@' + reg_username + '/" and @class="nav-link"]')))
 
-        assert user_name.text == user["name"]
+        assert user_name.text == reg_username
+        assert self.browser.current_url == 'http://localhost:1667/#/'
 
     # függvény bejelentkezésről
     def login(self):
@@ -156,6 +163,7 @@ class Fuggvenyek:
     #  függvény új cikk címének módósítása
 
     def mod_title_article(self):
+
         edit_article_button = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//i [@class="ion-edit"]')))
         assert edit_article_button.is_displayed()
@@ -173,7 +181,65 @@ class Fuggvenyek:
             EC.presence_of_element_located(
                 (By.XPATH, '//button [@type="submit" and @class="btn btn-lg pull-xs-right btn-primary"]')))
         publish_article_button.click()
-        time.sleep(5)
+        time.sleep(2)
 
-        title = self.browser.find_element(By.XPATH, '//h1')
-        assert title.text == mod_article["article_title"]
+        assert self.browser.current_url == 'http://localhost:1667/#/articles/gaudeamus-igitur'
+
+    #  függvény új cikk hozzászólása
+    def new_comment(self):
+        new_comment = self.browser.find_element(By.XPATH,
+                                                '//textarea [@placeholder="Write a comment..." and @class="form-control"]')
+        new_comment.send_keys(first_comment["comment"])
+
+        post_comment_button = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//button [@class="btn btn-sm btn-primary"]')))
+
+        post_comment_button.click()
+        time.sleep(3)
+
+        comment = self.browser.find_element(By.XPATH, '//p [@class="card-text"]')
+
+        assert comment.text == 'Juvenes dum sumus'
+
+    # függvény új cikk törlésére
+    def article_del(self):
+        delete_article_button = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//i[@class="ion-trash-a"]')))
+        delete_article_button.click()
+        time.sleep(3)
+        assert self.browser.current_url == 'http://localhost:1667/#/'
+
+    # függvény adatok lementése felületről
+    def saving_data_interface(self):
+
+        szerzo = self.browser.find_elements(By.CLASS_NAME, 'author')
+
+        with open('interface_data.csv', 'a', encoding='UTF-8') as file_szoveg:
+            for i in range(szerzo.__len__()):
+                szerzo = self.browser.find_elements(By.CLASS_NAME, 'author')[i]
+                time.sleep(5)
+                print(szerzo.text)
+
+                file_szoveg.writelines(f'Cikk szerzője: {szerzo.text}\n')
+                time.sleep(5)
+
+    # függvény kilépésről
+
+    def logout(self):
+        logout_button = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//i[@class="ion-android-exit"]')))
+        assert logout_button.is_displayed()
+        logout_button.click()
+
+    # függvény ismételt és sorozatos adatbevitel adatforrásból
+
+    def import_data_from_file(self):
+        time.sleep(5)
+        with open('registration_data.csv', 'r') as registration_data:
+            registration_reader = csv.reader(registration_data, delimiter=',')
+            next(registration_reader)
+            for reg in registration_reader:
+                self.registration_with_param(reg[0], reg[1], reg[2])
+                time.sleep(2)
+
+                self.logout()

@@ -1,6 +1,6 @@
 user = {
-    "name": "user_emese",
-    "email": "varadimesi@gmail.com",
+    "name": "12user_emese",
+    "email": "12varadimesi@gmail.com",
     "password": "TesztElek01"
 }
 
@@ -17,3 +17,8 @@ mod_article = {
     "article": "Omnia Sol temperat \npurus et subtilis; \nnovo mundo reserat \nfacies Aprilis, \nad amorem properat\nanimus herilis, \net iocundis imperat \ndeus puerilis.",
     "tag": "fons"
 }
+
+first_comment = {
+    "comment": "Juvenes dum sumus"
+}
+

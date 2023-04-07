@@ -28,12 +28,12 @@ class TestConduit(Fuggvenyek):
     def teardown_method(self):
         self.browser.quit()
 
-    # TC_01 Adatkezési tájékoztató elfogadása
+#   TC_01 Sütik elfogadása
 
     def test_accept_cookie(self):
         self.accept_cookie()
 
-#     TC_02 Regisztráció az oldalra megfelelő adatokkal
+#   TC_02 Regisztráció az oldalra, megfelelő adatokkal
     def test_registration(self):
         self.accept_cookie()
         self.registration()
@@ -43,7 +43,7 @@ class TestConduit(Fuggvenyek):
         self.accept_cookie()
         self.login()
 
-  # TC_04 Egyik felhasználó cikkeinek kilistázása/lista bejárása
+#   TC_04 Egyik felhasználó cikkeinek kilistázása/lista bejárása
     def test_data_listing(self):
         self.accept_cookie()
         self.login()
@@ -67,3 +67,34 @@ class TestConduit(Fuggvenyek):
         self.login()
         self.new_article()
         self.mod_title_article()
+
+#   TC_08 Új cikk hozzászólása
+    def test_new_comment(self):
+        self.accept_cookie()
+        self.login()
+        self.new_article()
+        self.new_comment()
+
+#  TC_09 Új cikk törlése
+    def test_article_del(self):
+        self.accept_cookie()
+        self.login()
+        self.new_article()
+        self.article_del()
+
+#   TC_10 Bejelentkezés követően az első oldalon lévő cikkek szerzőinek a kigyűjtése csv fájlba
+    def test_saving_data_interface(self):
+        self.accept_cookie()
+        self.login()
+        self.saving_data_interface()
+
+#   TC_11 Ismételt és sorozatos adatbevitel adatforrásból
+    def test_import_data_from_file(self):
+        self.accept_cookie()
+        self.import_data_from_file()
+
+#   TC_12 Kijelentkezés
+    def test_logout(self):
+        self.accept_cookie()
+        self.login()
+        self.logout()

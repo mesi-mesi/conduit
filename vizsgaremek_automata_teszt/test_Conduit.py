@@ -54,3 +54,16 @@ class TestConduit(Fuggvenyek):
         self.accept_cookie()
         self.login()
         self.multi_page_list()
+
+#   TC_06 Új cikk létrehozása
+    def test_new_article(self):
+        self.accept_cookie()
+        self.login()
+        self.new_article()
+
+#   TC_07 Új cikk címének módosítása
+    def test_mod_article_title(self):
+        self.accept_cookie()
+        self.login()
+        self.new_article()
+        self.mod_title_article()

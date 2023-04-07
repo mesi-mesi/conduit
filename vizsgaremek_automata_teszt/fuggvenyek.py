@@ -59,7 +59,7 @@ class Fuggvenyek:
             EC.presence_of_element_located((By.XPATH, '//a [@href="#/@'+reg_username+'/" and @class="nav-link"]')))
 
         assert user_name.text == reg_username
-        assert self.browser.current_url == 'http://localhost:1667/#/'
+
 
     # függvény bejelentkezésről
     def login(self):

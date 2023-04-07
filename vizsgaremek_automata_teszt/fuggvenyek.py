@@ -235,7 +235,7 @@ class Fuggvenyek:
 
     def import_data_from_file(self):
         time.sleep(5)
-        with open('registration_data.csv', 'r') as registration_data:
+        with open('vizsgaremek_automata_teszt/registration_data.csv', 'r') as registration_data:
             registration_reader = csv.reader(registration_data, delimiter=',')
             next(registration_reader)
             for reg in registration_reader:

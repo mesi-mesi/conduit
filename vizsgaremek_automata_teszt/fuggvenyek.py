@@ -56,7 +56,7 @@ class Fuggvenyek:
         ok_button.click()
 
         user_name = WebDriverWait(self.browser, 5).until(
-            EC.presence_of_element_located((By.XPATH, '//a [@href="#/@' + reg_username + '/" and @class="nav-link"]')))
+            EC.presence_of_element_located((By.XPATH, '//a [@href="#/@'+reg_username+'/" and @class="nav-link"]')))
 
         assert user_name.text == reg_username
         assert self.browser.current_url == 'http://localhost:1667/#/'

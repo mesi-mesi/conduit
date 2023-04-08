@@ -1,15 +1,9 @@
 from fuggvenyek import Fuggvenyek
-from adatok import *
-import time
-import csv
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
+
 
 class TestConduit(Fuggvenyek):
 
@@ -28,72 +22,84 @@ class TestConduit(Fuggvenyek):
     def teardown_method(self):
         self.browser.quit()
 
-#   TC_01 Sütik elfogadása
+
+#   ATC_01 Adatkezelés elfogadása
 
     def test_accept_cookie(self):
         self.accept_cookie()
 
-#   TC_02 Regisztráció az oldalra, megfelelő adatokkal
+
+#   ATC_02 Regisztráció megfelelő adatokkal
     def test_registration(self):
         self.accept_cookie()
         self.registration()
 
-#    TC_03 Bejelentkezés megfelelő adatokkal
+
+#   ATC_03 Bejelentkezés megfelelő adatokkal
     def test_login(self):
         self.accept_cookie()
         self.login()
 
-#   TC_04 Egyik felhasználó cikkeinek kilistázása/lista bejárása
+
+#   ATC_04 Egyik felhasználó cikkeinek kilistázása/lista bejárása
     def test_data_listing(self):
         self.accept_cookie()
         self.login()
         self.data_listing()
 
-#   TC_05 Több oldalas lista bejárása
+
+#   ATC_05 Több oldalas lista bejárása
     def test_multi_page_list(self):
         self.accept_cookie()
         self.login()
         self.multi_page_list()
 
-#   TC_06 Új cikk létrehozása
+
+#   ATC_06 Cikk létrehozása
     def test_new_article(self):
         self.accept_cookie()
         self.login()
         self.new_article()
 
-#   TC_07 Új cikk címének módosítása
+
+#   ATC_07 Saját cikk címének módosítása
     def test_mod_article_title(self):
         self.accept_cookie()
         self.login()
         self.new_article()
         self.mod_title_article()
 
-#   TC_08 Új cikk hozzászólása
+
+#   ATC_08 Saját cikk hozzászólása
     def test_new_comment(self):
         self.accept_cookie()
         self.login()
         self.new_article()
         self.new_comment()
 
-#  TC_09 Új cikk törlése
+
+#   ATC_09 Saját cikk törlése
     def test_article_del(self):
         self.accept_cookie()
         self.login()
         self.new_article()
         self.article_del()
 
-#   TC_10 Bejelentkezés követően az első oldalon lévő cikkek szerzőinek a kigyűjtése csv fájlba
+
+#   ATC_10 Bejelentkezést követően az első oldalon lévő cikkek szerzőinek a kigyűjtése csv fájlba
     def test_saving_data_interface(self):
         self.accept_cookie()
         self.login()
         self.saving_data_interface()
 
-#   TC_11 Ismételt és sorozatos adatbevitel adatforrásból
+
+#   ATC_11 Ismtelt és sorozatos adatbevitel adatforrásból (többszöri regisztráció)
     def test_import_data_from_file(self):
         self.accept_cookie()
         self.import_data_from_file()
 
-#   TC_12 Kijelentkezés
+
+#   ATC_12 Kijelentkezés
     def test_logout(self):
         self.accept_cookie()
         self.login()

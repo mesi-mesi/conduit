@@ -1,16 +1,9 @@
 import time
 import csv
 from adatok import *
-from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-
-from datetime import datetime
 
 
 class Fuggvenyek:
@@ -23,9 +16,11 @@ class Fuggvenyek:
 
         accept.click()
 
+
     # függvény a regisztrációról
     def registration(self):
         self.registration_with_param(user["name"], user["email"], user["password"])
+
 
     # függvény a regisztráció paramétereiről
     def registration_with_param(self, reg_username, reg_email, reg_password):
@@ -87,6 +82,7 @@ class Fuggvenyek:
 
         assert user_name.text == user["name"]
 
+
     # függvény egy felhasználó cikkeinek kilistázásához
     def data_listing(self):
         first_user = WebDriverWait(self.browser, 10).until(
@@ -104,6 +100,7 @@ class Fuggvenyek:
 
         assert article.text != ""
         assert last_article.text == article.text
+
 
     # függvény több oldalas lista bejárására, a Conduit oldal összes cikk bejárása
     def multi_page_list(self):
@@ -125,6 +122,7 @@ class Fuggvenyek:
 
             osszeg += j
         print(f'Jelenleg {osszeg} cikk található az oldalon')
+
 
     # függvény új cikk létrehozására
 
@@ -160,6 +158,7 @@ class Fuggvenyek:
 
         assert self.browser.current_url == 'http://localhost:1667/#/articles/gaudeamus-igitur'
 
+
     #  függvény új cikk címének módósítása
 
     def mod_title_article(self):
@@ -185,6 +184,7 @@ class Fuggvenyek:
 
         assert self.browser.current_url == 'http://localhost:1667/#/articles/gaudeamus-igitur'
 
+
     #  függvény új cikk hozzászólása
     def new_comment(self):
         new_comment = self.browser.find_element(By.XPATH,
@@ -201,6 +201,7 @@ class Fuggvenyek:
 
         assert comment.text == 'Juvenes dum sumus'
 
+
     # függvény új cikk törlésére
     def article_del(self):
         delete_article_button = WebDriverWait(self.browser, 5).until(
@@ -208,6 +209,7 @@ class Fuggvenyek:
         delete_article_button.click()
         time.sleep(3)
         assert self.browser.current_url == 'http://localhost:1667/#/'
+
 
     # függvény adatok lementése felületről
     def saving_data_interface(self):
@@ -223,6 +225,7 @@ class Fuggvenyek:
                 file_szoveg.writelines(f'Cikk szerzője: {szerzo.text}\n')
                 time.sleep(5)
 
+
     # függvény kilépésről
 
     def logout(self):
@@ -230,6 +233,7 @@ class Fuggvenyek:
             EC.presence_of_element_located((By.XPATH, '//i[@class="ion-android-exit"]')))
         assert logout_button.is_displayed()
         logout_button.click()
+
 
     # függvény ismételt és sorozatos adatbevitel adatforrásból
 

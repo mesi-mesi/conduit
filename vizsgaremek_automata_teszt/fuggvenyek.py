@@ -110,8 +110,6 @@ class Fuggvenyek:
 
         page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')
 
-        osszeg = 0
-
         for i in range(len(page_link_button)):
             page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')[i]
             last_page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')[-1]
@@ -126,11 +124,11 @@ class Fuggvenyek:
 
             for j in range(len(article)):
                 article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')[j]
-                j += 1
-            osszeg += j
 
-        assert page_link_button.get_attribute('value') == last_page_link_button.get_attribute('value')
-        assert article.get_attribute('value') == last_article.get_attribute('value')
+                j += 1
+
+        assert page_link_button.text == last_page_link_button.text
+        assert article.text == last_article.text
 
     # függvény új cikk létrehozására
 

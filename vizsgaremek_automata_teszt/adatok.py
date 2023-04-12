@@ -22,4 +22,5 @@ first_comment = {
     "comment": "Juvenes dum sumus"
 }
 
+webdriver_timeout = 30
 

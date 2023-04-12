@@ -16,8 +16,13 @@ class Fuggvenyek:
             (By.XPATH, '//button [@class="cookie__bar__buttons__button cookie__bar__buttons__button--accept"]')))
 
         assert accept.text == 'I accept!'
+        assert accept.is_enabled()
+        assert len(self.browser.find_elements(By.ID, 'cookie-policy-panel')) != 0
 
         accept.click()
+        time.sleep(5)
+
+        assert len(self.browser.find_elements(By.ID, 'cookie-policy-panel')) == 0
 
     # függvény a regisztrációról
 
@@ -35,22 +40,21 @@ class Fuggvenyek:
 
         username = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//input [@placeholder="Username"]')))
-        username.send_keys(reg_username)
-
         email = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//input [@placeholder="Email"]')))
-        email.send_keys(reg_email)
-
         password = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//input [@placeholder="Password"]')))
-        password.send_keys(reg_password)
-
         sign_up_account = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//button [@class="btn btn-lg btn-primary pull-xs-right"]')))
+
+        username.send_keys(reg_username)
+        email.send_keys(reg_email)
+        password.send_keys(reg_password)
         sign_up_account.click()
 
         ok_button = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//button [@class="swal-button swal-button--confirm"]')))
+
         ok_button.click()
 
         user_name = WebDriverWait(self.browser, 5).until(
@@ -68,16 +72,14 @@ class Fuggvenyek:
 
         email_sign_in = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//input [@placeholder="Email"]')))
-
-        email_sign_in.send_keys(user["email"])
-
         password_sign_in = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//input [@placeholder="Password"]')))
-        password_sign_in.send_keys(user["password"])
-
         sign_in_account = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH,
                                             '//button [@class="btn btn-lg btn-primary pull-xs-right"]')))
+
+        email_sign_in.send_keys(user["email"])
+        password_sign_in.send_keys(user["password"])
         sign_in_account.click()
 
         user_name = WebDriverWait(self.browser, 5).until(
@@ -150,10 +152,9 @@ class Fuggvenyek:
         publish_article = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located(
                 (By.XPATH, '//button [@type="submit" and @class="btn btn-lg pull-xs-right btn-primary"]')))
-
         enter_tags = self.browser.find_element(By.XPATH, '//input[@placeholder="Enter tags"]')
-        article_title.send_keys(first_new_article["article_title"])
 
+        article_title.send_keys(first_new_article["article_title"])
         article_about.send_keys(first_new_article["about"])
         article_write.send_keys(first_new_article["article"])
         enter_tags.send_keys(first_new_article["tag"])
@@ -162,16 +163,12 @@ class Fuggvenyek:
         saved_article_title = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located(
                 (By.XPATH, '//h1')))
-        # saved_article_write = WebDriverWait(self.browser, 5).until(
-        #     EC.presence_of_element_located(
-        #         (By.XPATH, '//div/p')))
-        # saved_enter_tags = WebDriverWait(self.browser, 5).until(
-        #     EC.presence_of_element_located(
-        #         (By.CLASS_NAME, 'tag-pill tag-default')))
+        saved_article_write = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located(
+                (By.XPATH, '//div/p')))
 
-        assert article_title.get_attribute('value') == saved_article_title.get_attribute('value')
-        # assert article_write.get_attribute('value') == saved_article_write.get_attribute('value')
-        # assert enter_tags.get_attribute('value') == saved_enter_tags.get_attribute('value')
+        assert article_title.get_attribute('value') == saved_article_title.text
+        assert article_write.get_attribute('value') == saved_article_write.text
 
     #  függvény új cikk címének módósítása
 

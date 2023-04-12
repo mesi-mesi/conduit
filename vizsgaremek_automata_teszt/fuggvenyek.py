@@ -113,6 +113,8 @@ class Fuggvenyek:
 
         for i in range(len(page_link_button)):
             page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')[i]
+            last_page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')[-1]
+
             assert page_link_button.is_displayed()
             page_link_button.click()
             time.sleep(5)
@@ -120,13 +122,14 @@ class Fuggvenyek:
 
             article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')
             last_article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')[-1]
+
             for j in range(len(article)):
                 article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')[j]
                 j += 1
             osszeg += j
 
-        assert page_link_button.text == last_page_link_button.text
-        assert article.text == last_article.text
+        assert page_link_button.get_attribute('value') == last_page_link_button.get_attribute('value')
+        assert article.get_attribute('value') == last_article.get_attribute('value')
 
     # függvény új cikk létrehozására
 
@@ -150,7 +153,7 @@ class Fuggvenyek:
 
         enter_tags = self.browser.find_element(By.XPATH, '//input[@placeholder="Enter tags"]')
         article_title.send_keys(first_new_article["article_title"])
-        print(article_title.text)
+
         article_about.send_keys(first_new_article["about"])
         article_write.send_keys(first_new_article["article"])
         enter_tags.send_keys(first_new_article["tag"])
@@ -166,10 +169,9 @@ class Fuggvenyek:
             EC.presence_of_element_located(
                 (By.CLASS_NAME, 'tag-pill tag-default')))
 
-        assert article_title.text == saved_article_title.text
-        assert article_write.text == saved_article_write.text
-        assert enter_tags.text == saved_enter_tags.text
-
+        assert article_title.get_attribute('value') == saved_article_title.get_attribute('value')
+        assert article_write.get_attribute('value') == saved_article_write.get_attribute('value')
+        assert enter_tags.get_attribute('value') == saved_enter_tags.get_attribute('value')
 
     #  függvény új cikk címének módósítása
 

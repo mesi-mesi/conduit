@@ -1,5 +1,6 @@
 import time
 import csv
+import uuid
 
 from adatok import *
 from selenium.webdriver.common.by import By
@@ -133,6 +134,8 @@ class Fuggvenyek:
     # függvény új cikk létrehozására
 
     def new_article(self):
+        title = first_new_article["article_title"] + ' ' + str(uuid.uuid4())
+
         new_article_button = WebDriverWait(self.browser, webdriver_timeout).until(
             EC.presence_of_element_located((By.XPATH, '//i [@class="ion-compose"]')))
         new_article_button.click()
@@ -151,7 +154,7 @@ class Fuggvenyek:
                 (By.XPATH, '//button [@type="submit" and @class="btn btn-lg pull-xs-right btn-primary"]')))
         enter_tags = self.browser.find_element(By.XPATH, '//input[@placeholder="Enter tags"]')
 
-        article_title.send_keys(first_new_article["article_title"])
+        article_title.send_keys(title)
         article_about.send_keys(first_new_article["about"])
         article_write.send_keys(first_new_article["article"])
         enter_tags.send_keys(first_new_article["tag"])
@@ -164,7 +167,7 @@ class Fuggvenyek:
             EC.presence_of_element_located(
                 (By.XPATH, '//div [@class="row article-content"]/div/div/p')))
 
-        assert first_new_article["article_title"] == saved_article_title.get_attribute('innerText')
+        assert title == saved_article_title.get_attribute('innerText')
         assert first_new_article["article"] == saved_article_write.get_attribute('innerText')
 
     #  függvény új cikk címének módósítása
@@ -240,6 +243,10 @@ class Fuggvenyek:
             EC.presence_of_element_located((By.XPATH, '//i[@class="ion-android-exit"]')))
         assert logout_button.is_displayed()
         logout_button.click()
+
+        sign_in_button = WebDriverWait(self.browser, webdriver_timeout).until(
+            EC.presence_of_element_located((By.CLASS_NAME, 'ion-compose')))
+        assert sign_in_button.is_displayed()
 
     # függvény ismételt és sorozatos adatbevitel adatforrásból
 

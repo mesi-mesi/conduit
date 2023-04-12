@@ -1,3 +1,5 @@
+import uuid
+
 import allure
 from fuggvenyek import Fuggvenyek
 from selenium import webdriver

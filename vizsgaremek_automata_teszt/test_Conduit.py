@@ -1,5 +1,4 @@
 import allure
-import pytest
 from fuggvenyek import Fuggvenyek
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
@@ -27,13 +26,15 @@ class TestConduit(Fuggvenyek):
     #   ATC_01 Adatkezelés elfogadása
     @allure.id('ATC_01')
     @allure.title('Adatkezelés elfogadása')
+    @allure.description('Sütik elfogadása')
     def test_accept_cookie(self):
-
         self.accept_cookie()
+
 
     #   ATC_02 Regisztráció megfelelő adatokkal
     @allure.id('ATC_02')
     @allure.title('Regisztráció megfelelő adatokkal')
+    @allure.description('Regisztrációhoz szükséges adatokat az adatok.py fájlból származnak.')
     def test_registration(self):
         self.accept_cookie()
         self.registration()
@@ -41,6 +42,7 @@ class TestConduit(Fuggvenyek):
     #   ATC_03 Bejelentkezés megfelelő adatokkal
     @allure.id('ATC_03')
     @allure.title('Bejelentkezés megfelelő adatokkal')
+    @allure.description('Regisztrációnál létrehozott felhasználóval bejelentkezés')
     def test_login(self):
         self.accept_cookie()
         self.login()
@@ -104,9 +106,9 @@ class TestConduit(Fuggvenyek):
         self.login()
         self.saving_data_interface()
 
-    #   ATC_11 Ismtelt és sorozatos adatbevitel adatforrásból (többszöri regisztráció)
+    #   ATC_11 Ismételt és sorozatos adatbevitel adatforrásból (többszöri regisztráció)
     @allure.id('ATC_11')
-    @allure.title('Ismtelt és sorozatos adatbevitel adatforrásból (többszöri regisztráció)')
+    @allure.title('Ismételt és sorozatos adatbevitel adatforrásból (többszöri regisztráció)')
     def test_import_data_from_file(self):
         self.accept_cookie()
         self.import_data_from_file()

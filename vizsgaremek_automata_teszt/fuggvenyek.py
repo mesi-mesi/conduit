@@ -1,9 +1,11 @@
 import time
 import csv
+
 from adatok import *
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+import allure
 
 
 class Fuggvenyek:
@@ -18,10 +20,12 @@ class Fuggvenyek:
         accept.click()
 
     # függvény a regisztrációról
+
     def registration(self):
         self.registration_with_param(user["name"], user["email"], user["password"])
 
     # függvény a regisztráció paramétereiről
+
     def registration_with_param(self, reg_username, reg_email, reg_password):
         sign_up = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.XPATH, '//a [@href="#/register"]')))
@@ -55,6 +59,7 @@ class Fuggvenyek:
         assert user_name.text == reg_username
 
     # függvény bejelentkezésről
+
     def login(self):
         sign_in_button = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'ion-compose')))

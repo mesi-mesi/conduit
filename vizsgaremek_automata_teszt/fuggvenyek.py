@@ -108,28 +108,27 @@ class Fuggvenyek:
     # függvény több oldalas lista bejárására, a Conduit oldal összes cikk bejárása
     def multi_page_list(self):
 
-        page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')
+        page_link_buttons = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')
 
         last_page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')[
-            len(page_link_button) - 1]
+            len(page_link_buttons) - 1]
 
-        for i in range(len(page_link_button)):
+        for i in range(len(page_link_buttons)):
             page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')[i]
 
             assert page_link_button.is_displayed()
             page_link_button.click()
             time.sleep(5)
 
-            article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')
-            last_article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')[len(article)-1]
+            articles = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')
+            last_article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')[len(articles) - 1]
 
-            for j in range(len(article)):
+            for j in range(len(articles)):
                 article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')[j]
 
             assert article.get_attribute('value') == last_article.get_attribute('value')
 
         assert page_link_button.get_attribute('value') == last_page_link_button.get_attribute('value')
-
 
     # függvény új cikk létrehozására
 
@@ -177,12 +176,12 @@ class Fuggvenyek:
         assert edit_article_button.is_displayed()
         edit_article_button.click()
 
-        article_title_mod = WebDriverWait(self.browser, webdriver_timeout).until(
-            EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
-        article_title_mod.click()
-        article_title_mod.clear()
+        article_text = WebDriverWait(self.browser, webdriver_timeout).until(EC.presence_of_element_located(
+            (By.XPATH, '//fieldset/textarea [@placeholder="Write your article (in markdown)"]')))
+        article_text.click()
+        article_text.clear()
 
-        article_title_mod.send_keys(mod_article["article_title"])
+        article_text.send_keys(mod_article["article"])
 
         publish_article_button = WebDriverWait(self.browser, webdriver_timeout).until(
             EC.presence_of_element_located(
@@ -190,11 +189,11 @@ class Fuggvenyek:
         publish_article_button.click()
         time.sleep(2)
 
-        modified_article_title = WebDriverWait(self.browser, webdriver_timeout).until(
+        modified_article_text = WebDriverWait(self.browser, webdriver_timeout).until(
             EC.presence_of_element_located(
-                (By.XPATH, '//div [@class="container"]/h1')))
+                (By.XPATH, '//div [@class="row article-content"]/div/div/p')))
 
-        assert mod_article["article_title"] == modified_article_title.get_attribute('innerText')
+        assert mod_article["article"] == modified_article_text.get_attribute('innerText')
 
     #  függvény új cikk hozzászólása
     def new_comment(self):
@@ -210,7 +209,7 @@ class Fuggvenyek:
 
         comment = self.browser.find_element(By.XPATH, '//p [@class="card-text"]')
 
-        assert comment.text == 'Juvenes dum sumus'
+        assert comment.text == first_comment["comment"]
 
     # függvény új cikk törlésére
     def article_del(self):

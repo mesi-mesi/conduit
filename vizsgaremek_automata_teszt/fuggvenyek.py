@@ -110,26 +110,26 @@ class Fuggvenyek:
 
         page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')
 
+        last_page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')[
+            len(page_link_button) - 1]
+
         for i in range(len(page_link_button)):
             page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')[i]
-            # last_page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')[-1]
 
             assert page_link_button.is_displayed()
             page_link_button.click()
             time.sleep(5)
-            i += 1
 
             article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')
-            # last_article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')[-1]
+            last_article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')[len(article)-1]
 
             for j in range(len(article)):
                 article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')[j]
 
-                j += 1
-        assert article.text != ''
+            assert article.get_attribute('value') == last_article.get_attribute('value')
 
-        # assert page_link_button.get_attribute('value') == last_page_link_button.get_attribute('value')
-        # assert article.get_attribute('value') == last_article.get_attribute('value')
+        assert page_link_button.get_attribute('value') == last_page_link_button.get_attribute('value')
+
 
     # függvény új cikk létrehozására
 
@@ -160,13 +160,13 @@ class Fuggvenyek:
 
         saved_article_title = WebDriverWait(self.browser, webdriver_timeout).until(
             EC.presence_of_element_located(
-                (By.XPATH, '//h1')))
+                (By.XPATH, '//div [@class="container"]/h1')))
         saved_article_write = WebDriverWait(self.browser, webdriver_timeout).until(
             EC.presence_of_element_located(
-                (By.XPATH, '//div/p')))
+                (By.XPATH, '//div [@class="row article-content"]/div/div/p')))
 
-        # assert first_new_article["article_title"] == saved_article_title.get_attribute('value')
-        # assert article_write.get_attribute('value') == saved_article_write.get_attribute('value')
+        assert first_new_article["article_title"] == saved_article_title.get_attribute('innerText')
+        assert first_new_article["article"] == saved_article_write.get_attribute('innerText')
 
     #  függvény új cikk címének módósítása
 
@@ -190,7 +190,11 @@ class Fuggvenyek:
         publish_article_button.click()
         time.sleep(2)
 
-        # assert self.browser.current_url == 'http://localhost:1667/#/articles/gaudeamus-igitur'
+        modified_article_title = WebDriverWait(self.browser, webdriver_timeout).until(
+            EC.presence_of_element_located(
+                (By.XPATH, '//div [@class="container"]/h1')))
+
+        assert mod_article["article_title"] == modified_article_title.get_attribute('innerText')
 
     #  függvény új cikk hozzászólása
     def new_comment(self):
@@ -206,7 +210,7 @@ class Fuggvenyek:
 
         comment = self.browser.find_element(By.XPATH, '//p [@class="card-text"]')
 
-        # assert comment.text == 'Juvenes dum sumus'
+        assert comment.text == 'Juvenes dum sumus'
 
     # függvény új cikk törlésére
     def article_del(self):

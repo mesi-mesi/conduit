@@ -109,7 +109,6 @@ class Fuggvenyek:
     def multi_page_list(self):
 
         page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')
-        last_page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')[-1]
 
         osszeg = 0
 

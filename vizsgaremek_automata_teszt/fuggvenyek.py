@@ -96,7 +96,7 @@ class Fuggvenyek:
         article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')
         last_article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')[-1]
 
-        for j in range(article.__len__()):
+        for j in range(len(article)):
             article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')[j]
             j += 1
 
@@ -107,9 +107,11 @@ class Fuggvenyek:
     def multi_page_list(self):
 
         page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')
+        last_page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')[-1]
+
         osszeg = 0
 
-        for i in range(page_link_button.__len__()):
+        for i in range(len(page_link_button)):
             page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')[i]
             assert page_link_button.is_displayed()
             page_link_button.click()
@@ -117,12 +119,14 @@ class Fuggvenyek:
             i += 1
 
             article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')
-            for j in range(article.__len__()):
+            last_article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')[-1]
+            for j in range(len(article)):
                 article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')[j]
                 j += 1
-
             osszeg += j
-        print(f'Jelenleg {osszeg} cikk található az oldalon')
+
+        assert page_link_button.text == last_page_link_button.text
+        assert article.text == last_article.text
 
     # függvény új cikk létrehozására
 
@@ -136,27 +140,36 @@ class Fuggvenyek:
 
         article_title = WebDriverWait(self.browser, 10).until(
             EC.presence_of_element_located((By.XPATH, '//input[@placeholder="Article Title"]')))
-        article_title.send_keys(first_new_article["article_title"])
-
         article_about = WebDriverWait(self.browser, 10).until(
             EC.presence_of_element_located((By.XPATH, '//input[@placeholder="What\'s this article about?"]')))
-
-        article_about.send_keys(first_new_article["about"])
-
         article_write = self.browser.find_element(By.XPATH,
                                                   '//fieldset/textarea [@placeholder="Write your article (in markdown)"]')
-        article_write.send_keys(first_new_article["article"])
-
-        enter_tags = self.browser.find_element(By.XPATH, '//input[@placeholder="Enter tags"]')
-        enter_tags.send_keys(first_new_article["tag"])
-
         publish_article = WebDriverWait(self.browser, 5).until(
             EC.presence_of_element_located(
                 (By.XPATH, '//button [@type="submit" and @class="btn btn-lg pull-xs-right btn-primary"]')))
-        publish_article.click()
-        time.sleep(2)
 
-        assert self.browser.current_url == 'http://localhost:1667/#/articles/gaudeamus-igitur'
+        enter_tags = self.browser.find_element(By.XPATH, '//input[@placeholder="Enter tags"]')
+        article_title.send_keys(first_new_article["article_title"])
+        print(article_title.text)
+        article_about.send_keys(first_new_article["about"])
+        article_write.send_keys(first_new_article["article"])
+        enter_tags.send_keys(first_new_article["tag"])
+        publish_article.click()
+
+        saved_article_title = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located(
+                (By.XPATH, '//h1')))
+        saved_article_write = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located(
+                (By.XPATH, '//div/p')))
+        saved_enter_tags = WebDriverWait(self.browser, 5).until(
+            EC.presence_of_element_located(
+                (By.CLASS_NAME, 'tag-pill tag-default')))
+
+        assert article_title.text == saved_article_title.text
+        assert article_write.text == saved_article_write.text
+        assert enter_tags.text == saved_enter_tags.text
+
 
     #  függvény új cikk címének módósítása
 

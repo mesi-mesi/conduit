@@ -8,7 +8,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 class Fuggvenyek:
     # függvény az adatkezelésről
-    @allure.description('függvény az adatkezelésről___függvényben')
+
     def accept_cookie(self):
         accept = WebDriverWait(self.browser, 5).until(EC.presence_of_element_located(
             (By.XPATH, '//button [@class="cookie__bar__buttons__button cookie__bar__buttons__button--accept"]')))

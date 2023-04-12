@@ -1,3 +1,5 @@
+import allure
+import pytest
 from fuggvenyek import Fuggvenyek
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
@@ -26,7 +28,7 @@ class TestConduit(Fuggvenyek):
     @allure.id('ATC_01')
     @allure.title('Adatkezelés elfogadása')
     def test_accept_cookie(self):
-        @allure.description('függvény a regisztrációról___tesztben')
+
         self.accept_cookie()
 
     #   ATC_02 Regisztráció megfelelő adatokkal

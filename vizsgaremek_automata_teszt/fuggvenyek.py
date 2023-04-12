@@ -225,16 +225,15 @@ class Fuggvenyek:
     # függvény adatok lementése felületről
     def saving_data_interface(self):
 
-        szerzo = self.browser.find_elements(By.CLASS_NAME, 'author')
+        szerzok = self.browser.find_elements(By.CLASS_NAME, 'author')
 
-        with open('vizsgaremek_automata_teszt/interface_data.csv', 'a', encoding='UTF-8') as file_szoveg:
-            for i in range(len(szerzo)):
-                szerzo = self.browser.find_elements(By.CLASS_NAME, 'author')[i]
-                time.sleep(5)
+        with open('vizsgaremek_automata_teszt/interface_data.csv', 'w', encoding='UTF-8') as file_szoveg:
+            for szerzo in szerzok:
+                #time.sleep(5)
                 print(szerzo.text)
 
                 file_szoveg.writelines(f'Cikk szerzője: {szerzo.text}\n')
-                time.sleep(5)
+                #time.sleep(5)
 
     # függvény kilépésről
 

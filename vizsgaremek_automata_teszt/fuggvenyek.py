@@ -59,13 +59,16 @@ class Fuggvenyek:
         ok_button.click()
 
         user_name = WebDriverWait(self.browser, webdriver_timeout).until(
-            EC.presence_of_element_located((By.XPATH, '//a [@href="#/@' + reg_username + '/" and @class="nav-link"]')))
+            EC.presence_of_element_located((By.XPATH, '//a [@href="#/@' + user["name"] + '/" and @class="nav-link"]')))
 
         assert user_name.text == reg_username
 
     # függvény bejelentkezésről
 
     def login(self):
+        self.login_with_param(user["name"], user["email"], user["password"])
+
+    def login_with_param(self, login_username, login_email, login_password):
         sign_in_button = WebDriverWait(self.browser, webdriver_timeout).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'ion-compose')))
         sign_in_button.click()
@@ -79,36 +82,35 @@ class Fuggvenyek:
             EC.presence_of_element_located((By.XPATH,
                                             '//button [@class="btn btn-lg btn-primary pull-xs-right"]')))
 
-        email_sign_in.send_keys(user["email"])
-        password_sign_in.send_keys(user["password"])
+        email_sign_in.send_keys(login_email)
+        password_sign_in.send_keys(login_password)
         sign_in_account.click()
 
         user_name = WebDriverWait(self.browser, webdriver_timeout).until(
-            EC.presence_of_element_located((By.XPATH, '//a [@href="#/@user_emese/" and @class="nav-link"]')))
+            EC.presence_of_element_located(
+                (By.XPATH, '//a [@href="#/@' + login_username + '/" and @class="nav-link"]')))
 
         assert user_name.text == user["name"]
 
     # függvény egy felhasználó cikkeinek kilistázásához
     def data_listing(self):
-        first_user = WebDriverWait(self.browser, webdriver_timeout).until(
+        first_user = WebDriverWait(self.browser, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'author')))
         first_user.click()
         time.sleep(5)
         assert self.browser.current_url != 'http://localhost:1667/#/'
 
-        article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')
-        last_article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')[-1]
+        articles = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')
+        last_article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')[len(articles) - 1]
 
-        for j in range(len(article)):
+        for j in range(len(articles)):
             article = self.browser.find_elements(By.XPATH, '// div[@ class="article-preview"]')[j]
-            j += 1
+            assert article.text != ""
 
-        assert article.text != ""
         assert last_article.text == article.text
 
     # függvény több oldalas lista bejárására, a Conduit oldal összes cikk bejárása
     def multi_page_list(self):
-
         page_link_buttons = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')
 
         last_page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')[
@@ -173,7 +175,6 @@ class Fuggvenyek:
     #  függvény új cikk címének módósítása
 
     def mod_article(self):
-
         edit_article_button = WebDriverWait(self.browser, webdriver_timeout).until(
             EC.presence_of_element_located((By.XPATH, '//i [@class="ion-edit"]')))
         assert edit_article_button.is_displayed()
@@ -216,20 +217,39 @@ class Fuggvenyek:
 
     # függvény új cikk törlésére
     def article_del(self):
+        saved_article_title = WebDriverWait(self.browser, webdriver_timeout).until(
+            EC.presence_of_element_located(
+                (By.XPATH, '//div [@class="container"]/h1')))
+
         delete_article_button = WebDriverWait(self.browser, webdriver_timeout).until(
             EC.presence_of_element_located((By.XPATH, '//i[@class="ion-trash-a"]')))
         delete_article_button.click()
         time.sleep(3)
         assert self.browser.current_url == 'http://localhost:1667/#/'
 
+        your_feed_btn = WebDriverWait(self.browser, webdriver_timeout).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "nav-link")))
+        time.sleep(2)
+
+        articles_title = self.browser.find_elements(By.XPATH, '//a [@class="preview-link"]/h1')
+
+        for article_title in articles_title:
+            assert saved_article_title != article_title
+
     # függvény adatok lementése felületről
     def saving_data_interface(self):
 
+        time.sleep(2)
         szerzok = self.browser.find_elements(By.CLASS_NAME, 'author')
-
+        szerzo_lista = list()
         with open('vizsgaremek_automata_teszt/interface_data.csv', 'w') as file_szoveg:
             for szerzo in szerzok:
-                file_szoveg.writelines(f'Cikk szerzője: {szerzo.text}\n')
+                szerzo_lista.append(szerzo)
+                file_szoveg.write(f'Cikk szerzoje: {szerzo.text}\n')
+        time.sleep(5)
+
+        with open('vizsgaremek_automata_teszt/interface_data.csv', 'r') as csv_szoveg:
+            assert len(szerzo_lista) == len(list(csv_szoveg))
 
     # függvény kilépésről
 

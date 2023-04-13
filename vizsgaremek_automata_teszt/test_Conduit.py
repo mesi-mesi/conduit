@@ -71,14 +71,14 @@ class TestConduit(Fuggvenyek):
         self.login()
         self.new_article()
 
-    #   ATC_07 Saját cikk címének módosítása
+    #   ATC_07 Saját cikk szövegének módosítása
     @allure.id('ATC_07')
-    @allure.title('Saját cikk címének módosítása')
-    def test_mod_article_title(self):
+    @allure.title('Saját cikk szövegének módosítása')
+    def test_mod_article(self):
         self.accept_cookie()
         self.login()
         self.new_article()
-        self.mod_title_article()
+        self.mod_article()
 
     #   ATC_08 Saját cikk hozzászólása
     @allure.id('ATC_08')
@@ -90,8 +90,8 @@ class TestConduit(Fuggvenyek):
         self.new_comment()
 
     #   ATC_09 Saját cikk törlése
-    # @allure.id('ATC_09')
-    # @allure.title('Saját cikk törlése')
+    @allure.id('ATC_09')
+    @allure.title('Saját cikk törlése')
     def test_article_del(self):
         self.accept_cookie()
         self.login()

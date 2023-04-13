@@ -172,7 +172,7 @@ class Fuggvenyek:
 
     #  függvény új cikk címének módósítása
 
-    def mod_title_article(self):
+    def mod_article(self):
 
         edit_article_button = WebDriverWait(self.browser, webdriver_timeout).until(
             EC.presence_of_element_located((By.XPATH, '//i [@class="ion-edit"]')))
@@ -227,13 +227,9 @@ class Fuggvenyek:
 
         szerzok = self.browser.find_elements(By.CLASS_NAME, 'author')
 
-        with open('vizsgaremek_automata_teszt/interface_data.csv', 'w', encoding='UTF-8') as file_szoveg:
+        with open('vizsgaremek_automata_teszt/interface_data.csv', 'w') as file_szoveg:
             for szerzo in szerzok:
-                #time.sleep(5)
-                print(szerzo.text)
-
                 file_szoveg.writelines(f'Cikk szerzője: {szerzo.text}\n')
-                #time.sleep(5)
 
     # függvény kilépésről
 

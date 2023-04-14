@@ -243,15 +243,17 @@ class Fuggvenyek:
         time.sleep(2)
         szerzok = self.browser.find_elements(By.CLASS_NAME, 'author')
         szerzo_lista = list()
-        with open('interface_data.txt', 'w') as file_szoveg:
+        with open('vizsgaremek_automata_teszt/interface_data.txt', 'w') as file_szoveg:
             for szerzo in szerzok:
                 szerzo_lista.append(szerzo)
                 file_szoveg.write(f'Cikk szerzoje: {szerzo.text}\n')
         time.sleep(5)
 
-        with open('interface_data.txt', 'r') as csv_szoveg:
-            assert len(szerzo_lista) == len(list(csv_szoveg))
+        with open('vizsgaremek_automata_teszt/interface_data.txt', 'r') as txt_szoveg:
+            sorok_szama = len(txt_szoveg.readlines())
+            assert len(szerzo_lista) == sorok_szama
             assert len(szerzo_lista) != 0
+
 
     # függvény kilépésről
 
@@ -269,7 +271,7 @@ class Fuggvenyek:
 
     def import_data_from_file(self):
         time.sleep(5)
-        with open('registration_data.csv', 'r') as registration_data:
+        with open('vizsgaremek_automata_teszt/registration_data.csv', 'r') as registration_data:
             registration_reader = csv.reader(registration_data, delimiter=',')
             next(registration_reader)
             for reg in registration_reader:

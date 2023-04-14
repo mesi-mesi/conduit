@@ -100,7 +100,7 @@ class TestConduit(Fuggvenyek):
 
     #   ATC_10 Bejelentkezést követően az első oldalon lévő cikkek szerzőinek a kigyűjtése csv fájlba
     @allure.id('ATC_10')
-    @allure.title('Bejelentkezést követően az első oldalon lévő cikkek szerzőinek a kigyűjtése csv fájlba')
+    @allure.title('Bejelentkezést követően az első oldalon lévő cikkek szerzőinek a kigyűjtése txt fájlba')
     def test_saving_data_interface(self):
         self.accept_cookie()
         self.login()

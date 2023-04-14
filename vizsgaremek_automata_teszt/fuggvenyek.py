@@ -112,6 +112,7 @@ class Fuggvenyek:
 
     # függvény több oldalas lista bejárására, a Conduit oldal összes cikk bejárása
     def multi_page_list(self):
+        time.sleep(5)
         page_link_buttons = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')
 
         last_page_link_button = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')[
@@ -255,8 +256,6 @@ class Fuggvenyek:
             assert len(szerzo_lista) == sorok_szama
             assert len(szerzo_lista) != 0
 
-
-
     # függvény kilépésről
 
     def logout(self):
@@ -279,5 +278,4 @@ class Fuggvenyek:
             for reg in registration_reader:
                 self.registration_with_param(reg[0], reg[1], reg[2])
                 time.sleep(2)
-
                 self.logout()

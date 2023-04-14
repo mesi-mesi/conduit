@@ -37,6 +37,7 @@ class Fuggvenyek:
             EC.presence_of_element_located((By.XPATH, '//a [@href="#/register"]')))
 
         sign_up.click()
+        time.sleep(2)
         assert self.browser.current_url == 'http://localhost:1667/#/register'
 
         username = WebDriverWait(self.browser, webdriver_timeout).until(
@@ -59,7 +60,7 @@ class Fuggvenyek:
         ok_button.click()
 
         user_name = WebDriverWait(self.browser, webdriver_timeout).until(
-            EC.presence_of_element_located((By.XPATH, '//a [@href="#/@' + user["name"] + '/" and @class="nav-link"]')))
+            EC.presence_of_element_located((By.XPATH, '//a [@href="#/@' + reg_username + '/" and @class="nav-link"]')))
 
         assert user_name.text == reg_username
 
@@ -242,14 +243,15 @@ class Fuggvenyek:
         time.sleep(2)
         szerzok = self.browser.find_elements(By.CLASS_NAME, 'author')
         szerzo_lista = list()
-        with open('vizsgaremek_automata_teszt/interface_data.csv', 'w') as file_szoveg:
+        with open('interface_data.txt', 'w') as file_szoveg:
             for szerzo in szerzok:
                 szerzo_lista.append(szerzo)
                 file_szoveg.write(f'Cikk szerzoje: {szerzo.text}\n')
         time.sleep(5)
 
-        with open('vizsgaremek_automata_teszt/interface_data.csv', 'r') as csv_szoveg:
+        with open('interface_data.txt', 'r') as csv_szoveg:
             assert len(szerzo_lista) == len(list(csv_szoveg))
+            assert len(szerzo_lista) != 0
 
     # függvény kilépésről
 
@@ -267,7 +269,7 @@ class Fuggvenyek:
 
     def import_data_from_file(self):
         time.sleep(5)
-        with open('vizsgaremek_automata_teszt/registration_data.csv', 'r') as registration_data:
+        with open('registration_data.csv', 'r') as registration_data:
             registration_reader = csv.reader(registration_data, delimiter=',')
             next(registration_reader)
             for reg in registration_reader:

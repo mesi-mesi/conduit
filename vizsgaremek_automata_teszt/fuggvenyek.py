@@ -91,7 +91,7 @@ class Fuggvenyek:
             EC.presence_of_element_located(
                 (By.XPATH, '//a [@href="#/@' + login_username + '/" and @class="nav-link"]')))
 
-        assert user_name.text == user["name"]
+        assert user_name.text == login_username
 
     # függvény egy felhasználó cikkeinek kilistázásához
     def data_listing(self):
@@ -230,6 +230,7 @@ class Fuggvenyek:
 
         your_feed_btn = WebDriverWait(self.browser, webdriver_timeout).until(
             EC.presence_of_element_located((By.CLASS_NAME, "nav-link")))
+        your_feed_btn.click()
         time.sleep(2)
 
         articles_title = self.browser.find_elements(By.XPATH, '//a [@class="preview-link"]/h1')
@@ -253,6 +254,7 @@ class Fuggvenyek:
             sorok_szama = len(txt_szoveg.readlines())
             assert len(szerzo_lista) == sorok_szama
             assert len(szerzo_lista) != 0
+
 
 
     # függvény kilépésről

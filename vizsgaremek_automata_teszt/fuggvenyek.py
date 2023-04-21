@@ -10,8 +10,8 @@ import allure
 
 
 class Fuggvenyek:
-    # függvény az adatkezelésről
 
+    # függvény, adatkezelés
     def accept_cookie(self):
         accept = WebDriverWait(self.browser, webdriver_timeout).until(EC.presence_of_element_located(
             (By.XPATH, '//button [@class="cookie__bar__buttons__button cookie__bar__buttons__button--accept"]')))
@@ -25,13 +25,11 @@ class Fuggvenyek:
 
         assert len(self.browser.find_elements(By.ID, 'cookie-policy-panel')) == 0
 
-    # függvény a regisztrációról
-
+    # függvény, regisztráció
     def registration(self):
         self.registration_with_param(user["name"], user["email"], user["password"])
 
-    # függvény a regisztráció paramétereiről
-
+    # függvény, regisztráció paraméterei
     def registration_with_param(self, reg_username, reg_email, reg_password):
         sign_up = WebDriverWait(self.browser, webdriver_timeout).until(
             EC.presence_of_element_located((By.XPATH, '//a [@href="#/register"]')))
@@ -64,11 +62,11 @@ class Fuggvenyek:
 
         assert user_name.text == reg_username
 
-    # függvény bejelentkezésről
-
+    # függvény, bejelentkezés
     def login(self):
         self.login_with_param(user["name"], user["email"], user["password"])
 
+    # függvény, bejelentkezés paramétereiről
     def login_with_param(self, login_username, login_email, login_password):
         sign_in_button = WebDriverWait(self.browser, webdriver_timeout).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'ion-compose')))
@@ -93,7 +91,7 @@ class Fuggvenyek:
 
         assert user_name.text == login_username
 
-    # függvény egy felhasználó cikkeinek kilistázásához
+    # függvény, felhasználó cikkeinek kilistázása
     def data_listing(self):
         first_user = WebDriverWait(self.browser, 10).until(
             EC.presence_of_element_located((By.CLASS_NAME, 'author')))
@@ -110,7 +108,7 @@ class Fuggvenyek:
 
         assert last_article.text == article.text
 
-    # függvény több oldalas lista bejárására, a Conduit oldal összes cikk bejárása
+    # függvény, több oldalas lista bejárására (Conduit oldal összes cikk bejárása)
     def multi_page_list(self):
         time.sleep(5)
         page_link_buttons = self.browser.find_elements(By.XPATH, '//a [@class="page-link"]')
@@ -135,8 +133,7 @@ class Fuggvenyek:
 
         assert page_link_button.get_attribute('value') == last_page_link_button.get_attribute('value')
 
-    # függvény új cikk létrehozására
-
+    # függvény, új cikk létrehozása
     def new_article(self):
         title = first_new_article["article_title"] + ' ' + str(uuid.uuid4())
 
@@ -174,8 +171,7 @@ class Fuggvenyek:
         assert title == saved_article_title.get_attribute('innerText')
         assert first_new_article["article"] == saved_article_write.get_attribute('innerText')
 
-    #  függvény új cikk címének módósítása
-
+    #  függvény, cikk címének módósítása
     def mod_article(self):
         edit_article_button = WebDriverWait(self.browser, webdriver_timeout).until(
             EC.presence_of_element_located((By.XPATH, '//i [@class="ion-edit"]')))
@@ -201,7 +197,7 @@ class Fuggvenyek:
 
         assert mod_article["article"] == modified_article_text.get_attribute('innerText')
 
-    #  függvény új cikk hozzászólása
+    #  függvény, cikk hozzászólása
     def new_comment(self):
         new_comment = self.browser.find_element(By.XPATH,
                                                 '//textarea [@placeholder="Write a comment..." and @class="form-control"]')
@@ -217,7 +213,7 @@ class Fuggvenyek:
 
         assert comment.text == first_comment["comment"]
 
-    # függvény új cikk törlésére
+    # függvény, cikk törlése
     def article_del(self):
         saved_article_title = WebDriverWait(self.browser, webdriver_timeout).until(
             EC.presence_of_element_located(
@@ -239,7 +235,7 @@ class Fuggvenyek:
         for article_title in articles_title:
             assert saved_article_title != article_title
 
-    # függvény adatok lementése felületről
+    # függvény, adatok lementése felületről
     def saving_data_interface(self):
 
         time.sleep(2)
@@ -256,8 +252,7 @@ class Fuggvenyek:
             assert len(szerzo_lista) == sorok_szama
             assert len(szerzo_lista) != 0
 
-    # függvény kilépésről
-
+    # függvény, kilépés
     def logout(self):
         logout_button = WebDriverWait(self.browser, webdriver_timeout).until(
             EC.presence_of_element_located((By.XPATH, '//i[@class="ion-android-exit"]')))
@@ -268,8 +263,7 @@ class Fuggvenyek:
             EC.presence_of_element_located((By.CLASS_NAME, 'ion-compose')))
         assert sign_in_button.is_displayed()
 
-    # függvény ismételt és sorozatos adatbevitel adatforrásból
-
+    # függvény, ismételt és sorozatos adatbevitel adatforrásból
     def import_data_from_file(self):
         time.sleep(5)
         with open('vizsgaremek_automata_teszt/registration_data.csv', 'r') as registration_data:

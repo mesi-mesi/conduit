@@ -1,0 +1,105 @@
+Manuális tesztek
+
+ ID	Title						Result
+TC_001	Adatkezelés elfogadása				Pass
+TC_002	Regisztráció, megfelelő adatokkal		Pass
+TC_003	Regisztráció már létező emailcímmel		Pass
+TC_004	Bejelentkezés regisztrált felhasználóval	Pass
+TC_005	Bejelentkezés NEM regisztrált felhasználóval	Pass
+TC_006	Kijelentkezés					Pass
+TC_007	Cikk létrehozása				Pass
+TC_008	Visszanavigálás a fő oldalra, "Home" gombbal	Pass
+TC_009	Adatmódosítás, profilkép csere			Pass
+TC_010	Adatmódosítás, "username" módosítás		Pass
+TC_011	Rövid életrajz mentése				Pass
+TC_012	Adatmódosítás, profilkép kirölése majd mentése	Pass
+TC_013	Adatmódosítás,"username" kirölése majd mentése	Pass
+TC_014	Adatmódosítás, emailcím kirölése majd mentése	Pass
+TC_015	Bejelentkezett felhasználó, 
+	beállításoknál, jelszó kirölése majd mentése	Fail
+TC_016	Adatmódosítás, jelszó megváltoztatása		Pass
+TC_017	Adatmódosítás, emailcím megváltoztatása		Fail
+TC_018	Saját cikk listázása				Pass
+TC_019	Saját cikkek dátumainak ellenőrzése		Fail
+TC_020	"Your Feed" és "Global Feed" működésének 
+	ellenőrzése					Fail
+TC_021	Szűrés "tag" alapján				Pass
+TC_022	"Favorite Article" funkció ellenőrzése		Pass
+TC_023	Jelszó megváltoztatása, hét karakterű jelszóra	Pass
+TC_024	Saját cikk hozzászólása				Pass
+TC_025	Saját cikk hozzászólásának törlése		Pass
+TC_026	Cikk hozzászólásának a dátum ellenőrzése	Fail
+TC_027	Saját cikk "tag" módosítása			Pass
+TC_028	Saját cikk címének módosítása			Pass
+TC_029	Saját cikk rövid leírásának a módosítása	Pass
+TC_030	Saját cikk szövegének módosítása		Pass
+TC_031	Saját cikk törlése				Pass
+TC_032	Másik felhasználó követésének beállítása	Pass
+TC_033	Követés törlése					Pass
+TC_034	Regisztráció már létező felhasználónévvel	Fail
+
+
+Automata tesztek:
+ ID	Title
+ATC_01	Adatkezelés elfogadása
+ATC_02	Regisztráció megfelelő adatokkal
+ATC_03	Bejelentkezés regisztrált felhasználóval
+ATC_04	Egyik felhasználó cikkeinek kilistázása/lista bejárása
+ATC_05	Több oldalas lista bejárása
+ATC_06	Cikk létrehozása
+ATC_07 	Saját cikk szövegének módosítása
+ATC_08	Saját cikk hozzászólása
+ATC_09	Saját cikk törlése
+ATC_10	Bejelentkezést követően az első oldalon lévő cikkek szerzőinek a kigyűjtése txt fájlba
+ATC_11	Ismtelt és sorozatos adatbevitel adatforrásból (többszöri regisztráció)
+ATC_12	Kijelentkezés
+
+
+Követelményben megfogalmazott automata funkciókhoz tartozó tesztesetek
+
+Regisztráció:	
+	ATC_02 Regisztráció megfelelő adatokkal
+Bejelentkezés	
+	ATC_03 Bejelentkezés regisztrált fehlasználóval
+Adatkezelési nyilatkozat használata	
+	ATC_01 Adatkezelés elfogadása
+Adatok listázása	
+	ATC_04 Egyik felhasználó cikkeinek kilistázása/lista bejárása
+Több oldalas lista bejárása	
+	ATC_05 Több oldalas lista bejárása
+Új adat bevitel	
+	ATC_06 Cikk létrehozása
+	ATC_08 Saját cikk hozzászólása
+Ismételt és sorozatos adatbevitel adatforrásból	
+	ATC_11 Ismtelt és sorozatos adatbevitel adatforrásból (többszöri regisztráció)
+Meglévő adat módosítás	
+	ATC_07 Saját cikk szövegének módosítása
+Adat vagy adatok törlése	
+	ATC_09 Saját cikk törlése
+Adatok lementése felületről	
+	ATC_10 Bejelentkezést követően az első oldalon lévő cikkek szerzőinek a kigyűjtése txt fájlba
+Kijelentkezés	
+	ATC_12 Kijelentkezés
+
+ 
+
+Manuális és automata tesztlefedettség:
+
+Manuális tesztek					Automata tesztek
+TC_001   Adatkezelés elfogadása			 	ATC_01  Adatkezelés elfogadása
+TC_002   Regisztráció, megfelelő adatokkal		ATC_02  Regisztráció megfelelő adatokkal
+TC_004   Bejelentkezés regisztrált felhasználóval	ATC_03  Bejelentkezés regisztrált fehlasználóval
+TC_007 	 Cikk létrehozása				ATC_06  Cikk létrehozása
+TC_024   Saját cikk hozzászólása			ATC_08  Saját cikk hozzászólása
+TC_031   Saját cikk törlése				ATC_09  Saját cikk törlése
+TC_030   Saját cikk szövegének módosítása		ATC_07  Saját cikk szövegének módosítása
+TC_006   Kijelentkezés					ATC_12  Kijelentkezés
+
+
+Manuálisan nem lefedett automata tesztek:
+
+ATC_04	Egyik felhasználó cikkeinek kilistázása/lista bejárása
+ATC_05	Több oldalas lista bejárása
+ATC_10	Bejelentkezést követően az első oldalon lévő cikkek szerzőinek a kigyűjtése txt fájlba
+ATC_11	Ismtelt és sorozatos adatbevitel adatforrásból (többszöri regisztráció)
+

@@ -36,6 +36,7 @@ class Fuggvenyek:
 
         sign_up.click()
         time.sleep(2)
+
         assert self.browser.current_url == 'http://localhost:1667/#/register'
 
         username = WebDriverWait(self.browser, webdriver_timeout).until(

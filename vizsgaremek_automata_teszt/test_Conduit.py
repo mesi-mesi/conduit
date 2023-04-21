@@ -106,3 +106,4 @@ class TestConduit(Fuggvenyek):
         self.accept_cookie()
         self.login()
         self.logout()
+
